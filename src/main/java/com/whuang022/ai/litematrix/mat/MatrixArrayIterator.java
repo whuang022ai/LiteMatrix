@@ -38,10 +38,7 @@ public class MatrixArrayIterator <T> implements MatrixIterator{
     @Override
     public MatrixElement getNextElement(){
         T o=mat[i][j];
-        MatrixElement <T> element=new MatrixElement<>();
-        element.value=o;
-        element.row=i;
-        element.col=j;
+        MatrixElement <T> element=new MatrixElement<>(i,j,o);
         if(hasNextColumn()){
             j++;
         }
