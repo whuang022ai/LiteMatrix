@@ -7,6 +7,6 @@ package com.whuang022.ai.litematrix.mat;
  * @param <T>
  */
 public interface Matrix2D <T> extends  Matrix{
-public abstract MatrixElement<T> getMatrixElement(int row,int col);
-public MatrixIterator getMatrixIterator();
+    public abstract MatrixElement<T> getMatrixElement(int row,int col);
+    public MatrixIterator getMatrixIterator();
 }

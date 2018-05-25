@@ -107,7 +107,7 @@ public class MatrixArray <T extends Number> implements Matrix2D{
     }
 
     @Override
-    public Matrix sum(Matrix val) throws MatrixDimensionsNotMatchException {
+    public Matrix <T> sum(Matrix val) throws MatrixDimensionsNotMatchException {
         int rowCheck=0;
         int colCheck=0;
         boolean check=false;
@@ -119,7 +119,7 @@ public class MatrixArray <T extends Number> implements Matrix2D{
             colCheck=1;
             check=true;
         }
-        Matrix <T> sum=new MatrixArray<>(rows,cols);
+        Matrix <T> sum=new MatrixArray(rows,cols);
         if(check){throw new IndexOutOfBoundsException(errorTableMatrixDimensionsNotMatch[rowCheck][colCheck]); 
         }else{
             for(int i=0;i<rows;i++){
