@@ -10,9 +10,9 @@ public class MatrixTest {
          m1.fill(3.0);
          Matrix <Integer> m2=new  MatrixArray<Integer>(3,3);
          m2.fill(2);
-         Matrix <Double> m3=m1.sum(m2);
+         Matrix <Double> m3=m1.sub(m2);
          m3.print();
         }
- } 
+} 
 
 

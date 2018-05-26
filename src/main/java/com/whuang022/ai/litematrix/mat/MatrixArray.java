@@ -154,8 +154,50 @@ public class MatrixArray <T extends Number> implements Matrix2D{
     }
 
     @Override
-    public Matrix sub(Matrix val) throws MatrixDimensionsNotMatchException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Matrix <T> sub(Matrix val) throws MatrixDimensionsNotMatchException {
+        int rowCheck=0;
+        int colCheck=0;
+        boolean check=false;
+        if(val.rowSize()!=rows){
+            rowCheck=1;
+            check=true;
+        }
+        if(val.colSize()!=cols){
+            colCheck=1;
+            check=true;
+        }
+        Matrix <T> sub=new MatrixArray(rows,cols);
+        if(check){throw new IndexOutOfBoundsException(errorTableMatrixDimensionsNotMatch[rowCheck][colCheck]); 
+        }else{
+            for(int i=0;i<rows;i++){
+                for(int j=0;j<cols;j++){
+                    T v =mat[i][j];
+                    T u=(T) val.get(i,j);
+                    T s;
+                    if (v == null || u == null) {
+                        return null;
+                    }
+                    if (v instanceof Double) {
+                      s=(T) new Double(v.doubleValue() - u.doubleValue());
+                    } else if (v instanceof Integer) {
+                      s=(T)new Integer( v.intValue() - u.intValue());
+                    } else if (v instanceof Float) {
+                      s=(T) new Float(v.floatValue() - u.floatValue());
+                    } else if (v instanceof Long) {
+                      s=(T) new Long (v.longValue() - u.longValue());
+                    }else if (v instanceof Short) {
+                      s=(T) new Short ((short) (v.shortValue() - u.shortValue()));
+                    }else if (v instanceof Byte) {
+                      s=(T) new Byte ( (byte) (v.byteValue() - u.byteValue()));
+                    }
+                    else {
+                        throw new IllegalArgumentException("Type " + v.getClass() + " is not supported by this method");
+                    }
+                    sub.set(i,j,s);
+              }
+            }
+        }
+        return sub;
     }
 
     @Override

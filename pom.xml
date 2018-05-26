@@ -5,7 +5,7 @@
   <artifactId>LiteMatrix</artifactId>
   <version>4.2.1</version>
   <packaging>jar</packaging>
-  <name>whuang022.ai</name>
+  <name>LiteMatrix</name>
   <url>https://github.com/whuang022ai/LiteNN</url>
   <description>whuang022.ai</description>
 	<properties>
