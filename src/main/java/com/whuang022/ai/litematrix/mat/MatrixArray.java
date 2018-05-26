@@ -18,6 +18,16 @@ public class MatrixArray <T extends Number> implements Matrix2D{
         this.rows=rows;
         this.mat=(T[][]) new  Number [rows][cols];
     }
+    public MatrixArray(int rows,int cols,T val){
+        this.cols=cols;
+        this.rows=rows;
+        this.mat=(T[][]) new  Number [rows][cols];
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                this.mat[i][j]=val;
+            }
+        }
+    }
     @Override
     public T get(int row, int col) throws IndexOutOfBoundsException {
         int rowCheck=0;
