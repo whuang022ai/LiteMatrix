@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
-Test set: com.whuang022.ai.litematrix.test.MatrixArrayIteratorTest
+Test set: com.whuang022.ai.litematrix.test.MatrixTest
 -------------------------------------------------------------------------------
-Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 sec
+Tests run: 0, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 sec

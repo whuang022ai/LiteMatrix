@@ -1,7 +1,7 @@
-com\whuang022\ai\litematrix\mat\Matrix2D.class
-com\whuang022\ai\litematrix\mat\MatrixIterator.class
-com\whuang022\ai\litematrix\mat\Matrix.class
-com\whuang022\ai\litematrix\mat\MatrixElement.class
-com\whuang022\ai\litematrix\mat\MatrixArray.class
-com\whuang022\ai\litematrix\mat\MatrixDimensionsNotMatchException.class
-com\whuang022\ai\litematrix\mat\MatrixArrayIterator.class
+com/whuang022/ai/litematrix/mat/MatrixArray.class
+com/whuang022/ai/litematrix/mat/MatrixIterator.class
+com/whuang022/ai/litematrix/mat/Matrix2D.class
+com/whuang022/ai/litematrix/mat/MatrixDimensionsNotMatchException.class
+com/whuang022/ai/litematrix/mat/MatrixElement.class
+com/whuang022/ai/litematrix/mat/MatrixArrayIterator.class
+com/whuang022/ai/litematrix/mat/Matrix.class

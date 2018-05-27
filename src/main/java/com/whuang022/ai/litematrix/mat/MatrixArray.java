@@ -211,12 +211,12 @@ public class MatrixArray <T extends Number> implements Matrix2D{
     }
 
     @Override
-    public Matrix product(Matrix val) throws MatrixDimensionsNotMatchException {
+    public Matrix mul(Matrix val) throws MatrixDimensionsNotMatchException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Matrix product(Number val) {
+    public Matrix mul(Number val) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
