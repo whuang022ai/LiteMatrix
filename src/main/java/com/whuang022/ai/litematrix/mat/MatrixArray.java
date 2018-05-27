@@ -216,10 +216,41 @@ public class MatrixArray <T extends Number> implements Matrix2D{
     }
 
     @Override
-    public Matrix mul(Number val) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Matrix mul(Number u) {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Matrix <T>mul=new MatrixArray<T>(rows,cols);
+        
+        for(int i=0;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                T v =mat[i][j];
+                T s;
+                if (v == null || u == null) {
+                    return null;
+                }
+                if (v instanceof Double) {
+                  s=(T) new Double(v.doubleValue() * u.doubleValue());
+                } else if (v instanceof Integer) {
+                  s=(T)new Integer( v.intValue() * u.intValue());
+                } else if (v instanceof Float) {
+                  s=(T) new Float(v.floatValue() * u.floatValue());
+                } else if (v instanceof Long) {
+                  s=(T) new Long (v.longValue() * u.longValue());
+                }else if (v instanceof Short) {
+                  s=(T) new Short ((short) (v.shortValue() * u.shortValue()));
+                }else if (v instanceof Byte) {
+                  s=(T) new Byte ( (byte) (v.byteValue() * u.byteValue()));
+                }
+                else {
+                    throw new IllegalArgumentException("Type " + v.getClass() + " is not supported by this method");
+                }
+                mul.set(i,j,s);
+            }
+       } 
+        return mul;
+        
     }
-
+    
+    /////
     @Override
     public MatrixIterator getMatrixIterator() {
         MatrixArrayIterator<T> it = new MatrixArrayIterator<>(mat);
