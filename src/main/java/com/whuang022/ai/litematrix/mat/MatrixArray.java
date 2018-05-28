@@ -1,6 +1,10 @@
 
 package com.whuang022.ai.litematrix.mat;
 
+import com.whuang022.ai.litematrix.compute.ComputeCell;
+import com.whuang022.ai.litematrix.compute.ComputeCellDouble;
+import com.whuang022.ai.litematrix.compute.ComputeCellInteger;
+
 /**
  *
  * @author whuang022aix 
@@ -9,24 +13,49 @@ public class MatrixArray <T extends Number> implements Matrix2D{
     
     private static final String[][] errorTableIndexOutofBounds={{"Success.","Column Index Out Of Bounds."},{"Row Index Out Of Bounds.","Row And Column Index Out Of Bounds."}};
     private static final String[][] errorTableMatrixDimensionsNotMatch={{"Success.","Column Dimension Not Match."},{"Row Dimension Not Match.","Row And Column Dimension Not Match."}};
-   
-    private final int rows; //rows = up-down direction size
-    private final int cols; //cols = left-right direction size
+    private ComputeCell  compute;
+    private  int rows; //rows = up-down direction size
+    private  int cols; //cols = left-right direction size
     private T[][] mat;
-    public MatrixArray(int rows,int cols){
-        this.cols=cols;
-        this.rows=rows;
-        this.mat=(T[][]) new  Number [rows][cols];
+    
+    private void initMatrixComputeCell(Number v){
+        if (v instanceof Double) {
+            compute=ComputeCellDouble.getInstance();
+            System.out.println("A");
+        } else if (v instanceof Integer) {
+            compute=ComputeCellInteger.getInstance();
+            System.out.println("Q");
+        } else if (v instanceof Float) {
+            
+        } else if (v instanceof Long) {
+            
+        } else if (v instanceof Short) {
+            
+        } else if (v instanceof Byte) {
+            
+        }else if (v == null) {
+            System.out.println("LL");
+        }
+        else {
+            System.out.println("DDD");
+            //throw new IllegalArgumentException("Type " + v.getClass() + " is not supported by this method");
+        }
     }
-    public MatrixArray(int rows,int cols,T val){
+    private  void initM(int rows,int cols,Number val){
         this.cols=cols;
         this.rows=rows;
         this.mat=(T[][]) new  Number [rows][cols];
         for(int i=0;i<rows;i++){
             for(int j=0;j<cols;j++){
-                this.mat[i][j]=val;
+                this.mat[i][j]=(T)val;
             }
         }
+        
+        initMatrixComputeCell(val); 
+    }
+
+    public MatrixArray(int rows,int cols,T val){
+        initM( rows, cols, val);
     }
     @Override
     public T get(int row, int col) throws IndexOutOfBoundsException {
@@ -129,9 +158,10 @@ public class MatrixArray <T extends Number> implements Matrix2D{
             colCheck=1;
             check=true;
         }
-        Matrix <T> sum=new MatrixArray(rows,cols);
+        Matrix <T> sum=new MatrixArray(rows,cols,mat[0][0]);
         if(check){throw new IndexOutOfBoundsException(errorTableMatrixDimensionsNotMatch[rowCheck][colCheck]); 
         }else{
+            
             for(int i=0;i<rows;i++){
                 for(int j=0;j<cols;j++){
                     T v =mat[i][j];
@@ -140,22 +170,7 @@ public class MatrixArray <T extends Number> implements Matrix2D{
                     if (v == null || u == null) {
                         return null;
                     }
-                    if (v instanceof Double) {
-                      s=(T) new Double(v.doubleValue() + u.doubleValue());
-                    } else if (v instanceof Integer) {
-                      s=(T)new Integer( v.intValue() + u.intValue());
-                    } else if (v instanceof Float) {
-                      s=(T) new Float(v.floatValue() + u.floatValue());
-                    } else if (v instanceof Long) {
-                      s=(T) new Long (v.longValue() + u.longValue());
-                    }else if (v instanceof Short) {
-                      s=(T) new Short ((short) (v.shortValue() + u.shortValue()));
-                    }else if (v instanceof Byte) {
-                      s=(T) new Byte ( (byte) (v.byteValue()+ u.byteValue()));
-                    }
-                    else {
-                        throw new IllegalArgumentException("Type " + v.getClass() + " is not supported by this method");
-                    }
+                    s =(T) compute.sum(v, u);
                     sum.set(i,j,s);
               }
             }
@@ -176,7 +191,7 @@ public class MatrixArray <T extends Number> implements Matrix2D{
             colCheck=1;
             check=true;
         }
-        Matrix <T> sub=new MatrixArray(rows,cols);
+        Matrix <T> sub=new MatrixArray(rows,cols,mat[0][0]);
         if(check){throw new IndexOutOfBoundsException(errorTableMatrixDimensionsNotMatch[rowCheck][colCheck]); 
         }else{
             for(int i=0;i<rows;i++){
@@ -187,22 +202,7 @@ public class MatrixArray <T extends Number> implements Matrix2D{
                     if (v == null || u == null) {
                         return null;
                     }
-                    if (v instanceof Double) {
-                      s=(T) new Double(v.doubleValue() - u.doubleValue());
-                    } else if (v instanceof Integer) {
-                      s=(T)new Integer( v.intValue() - u.intValue());
-                    } else if (v instanceof Float) {
-                      s=(T) new Float(v.floatValue() - u.floatValue());
-                    } else if (v instanceof Long) {
-                      s=(T) new Long (v.longValue() - u.longValue());
-                    }else if (v instanceof Short) {
-                      s=(T) new Short ((short) (v.shortValue() - u.shortValue()));
-                    }else if (v instanceof Byte) {
-                      s=(T) new Byte ( (byte) (v.byteValue() - u.byteValue()));
-                    }
-                    else {
-                        throw new IllegalArgumentException("Type " + v.getClass() + " is not supported by this method");
-                    }
+                    s=(T) compute.sub(v, u);
                     sub.set(i,j,s);
               }
             }
@@ -218,7 +218,7 @@ public class MatrixArray <T extends Number> implements Matrix2D{
     @Override
     public Matrix mul(Number u) {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        Matrix <T>mul=new MatrixArray<T>(rows,cols);
+        Matrix <T> mul=new MatrixArray(rows,cols,mat[0][0]);
         
         for(int i=0;i<rows;i++){
             for(int j=0;j<cols;j++){
@@ -227,22 +227,7 @@ public class MatrixArray <T extends Number> implements Matrix2D{
                 if (v == null || u == null) {
                     return null;
                 }
-                if (v instanceof Double) {
-                  s=(T) new Double(v.doubleValue() * u.doubleValue());
-                } else if (v instanceof Integer) {
-                  s=(T)new Integer( v.intValue() * u.intValue());
-                } else if (v instanceof Float) {
-                  s=(T) new Float(v.floatValue() * u.floatValue());
-                } else if (v instanceof Long) {
-                  s=(T) new Long (v.longValue() * u.longValue());
-                }else if (v instanceof Short) {
-                  s=(T) new Short ((short) (v.shortValue() * u.shortValue()));
-                }else if (v instanceof Byte) {
-                  s=(T) new Byte ( (byte) (v.byteValue() * u.byteValue()));
-                }
-                else {
-                    throw new IllegalArgumentException("Type " + v.getClass() + " is not supported by this method");
-                }
+                s=(T) compute.mul(v, u);
                 mul.set(i,j,s);
             }
        } 
